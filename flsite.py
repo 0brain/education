@@ -4,8 +4,9 @@
 '''
 from flask import Flask, render_template
 
-'''2) У випадку імпорту __name__ - буде ім’ям поточного файлу'''
-app = Flask(__name__)
+app = Flask(__name__) # 2) У випадку імпорту __name__ - буде ім’ям поточного файлу
+
+menu = ["Встановлення", "Перша програма", "Зворотній зв’язок"]  # 13) Створюємо список menu
 
 '''6) Використовуємо декоратор route(), щоб сказати Flask, який URL запустить функцію
    7) def index() - повертає повідомлення, яке буде відображено в браузері за URL адресою "/" та "index"
@@ -16,12 +17,13 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     '''9) підключаємо render_template в момент переходу /index, /, /about'''
-    return render_template("index.html", title="Про Flask")
+    return render_template("index.html", title="Про Flask", menu=menu)  # 14) Передаємо список menu в якості параметра в функцію render_template
 
 
 @app.route("/about")
 def about():
     return render_template("about.html", title="Про сайт")  # 10) в функцію render_template крім назви шаблону передаємо параметр title
+
 
 
 
