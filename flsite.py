@@ -27,6 +27,9 @@ def about():
     return render_template("about.html", title="Про сайт", menu=menu)  # 10) в функцію render_template крім назви шаблону передаємо параметр title
 
 
+@app.route("/contact")
+def contact():
+    return render_template("contact.html", title="Зворотній зв’язок", menu=menu)
 
 
 '''3) У випадку самостійного запуску __name__ - буде мати значення __main__;
