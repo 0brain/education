@@ -12,15 +12,17 @@ app = Flask(__name__)
 '''
 
 
-@app.route("/index")
+@app.route("/index")  # коли ми будемо переходити по адресу /index, буде загружатися шаблон index.html
 @app.route("/")
 def index():
-    return render_template("index.html")
+    '''9) підключаємо render_template в момент переходу /index, /, /about'''
+    return render_template("index.html", title="Про Flask")
 
 
 @app.route("/about")
 def about():
-    return render_template("about.html")
+    return render_template("about.html", title="Про сайт")  # 10) в функцію render_template крім назви шаблону передаємо параметр title
+
 
 
 '''3) У випадку самостійного запуску __name__ - буде мати значення __main__;
