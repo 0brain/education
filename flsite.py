@@ -2,7 +2,7 @@
    8) З бібліотеки flask імпортуємо функцію render_template, яка приймає ім’я шаблону
    і список змінних аргументів шаблону, а повертає готовий шаблон з заміненими аргументами
 '''
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
 
 app = Flask(__name__) # 2) У випадку імпорту __name__ - буде ім’ям поточного файлу
 
