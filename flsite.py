@@ -17,12 +17,12 @@ menu = ["Встановлення", "Перша програма", "Зворот
 @app.route("/")
 def index():
     '''9) підключаємо render_template в момент переходу /index, /, /about'''
-    return render_template("index.html", title="Про Flask", menu=menu)  # 14) Передаємо список menu в якості параметра в функцію render_template
+    return render_template("index.html", menu=menu)  # 14) Передаємо список menu в якості параметра в функцію render_template
 
 
 @app.route("/about")
 def about():
-    return render_template("about.html", title="Про сайт")  # 10) в функцію render_template крім назви шаблону передаємо параметр title
+    return render_template("about.html", title="Про сайт", menu=menu)  # 10) в функцію render_template крім назви шаблону передаємо параметр title
 
 
 
