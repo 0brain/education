@@ -32,9 +32,9 @@ def about():
 def contact():
     if request.method == 'POST':
         if len(request.form['username']) > 2:
-            flash("Повідомлення відправлено")
+            flash("Повідомлення відправлено", category="success")
         else:
-            flash("Виникла помилка відправлення")
+            flash("Виникла помилка відправлення", category="error")
     return render_template("contact.html", title="Зворотній зв’язок", menu=menu)
 
 
