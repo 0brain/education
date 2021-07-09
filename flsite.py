@@ -2,7 +2,7 @@
    8) З бібліотеки flask імпортуємо функцію render_template, яка приймає ім’я шаблону
    і список змінних аргументів шаблону, а повертає готовий шаблон з заміненими аргументами
 '''
-from flask import Flask, render_template, url_for, request, flash
+from flask import Flask, render_template, url_for, request, flash, session, redirect, abort
 
 app = Flask(__name__) # 2) У випадку імпорту __name__ - буде ім’ям поточного файлу
 app.config['SECRET_KEY'] = "kihihngfcj6751jg"
@@ -36,6 +36,24 @@ def contact():
         else:
             flash("Виникла помилка відправлення", category="error")
     return render_template("contact.html", title="Зворотній зв’язок", menu=menu)
+
+
+@app.route("/profile/<username>")
+def profile(username):
+    if "userLogged" not in session or session["userLogged"] != username:  #щоб користувач або незалогінений користувач випадково не зміг зайти в чужий профіль
+        abort(401)  #доступ до сторінки заборонено
+    return f"Профіль користувача: {username}"
+
+
+@app.route("/login", methods=['POST', 'GET'])  #декоратор прив’язаний до адресу /login по якому можна приймати пост і ґет запити
+def login():
+    if "userLogged" in session: #якщо userLogged існує в нашій сесії
+        return redirect(url_for("profile", username=session["userLogged"]))  #то ми робимо переадресацію на відповідний профайл з тим username, який знаходиться в сесії
+    elif request.method == "POST" and request.form["username"] == "Admin" and request.form["psw"] == "admin":  #інакше ми беремо дані з форми, і якщо вони співпадають з таким "Admin" юзернеймом і таким "admin" паролем
+        session["userLogged"] = request.form["username"]  # то ми зберігаємо дані в сесії
+        return redirect(url_for("profile", username=session["userLogged"]))   # і знову робимо переадресацію на відповідний профайл з тим username, який знаходиться в сесії
+    return render_template("login.html", title="Авторизація", menu=menu)  # а інакше просто буде відображена форма Авторизація
+
 
 
 @app.errorhandler(404)
