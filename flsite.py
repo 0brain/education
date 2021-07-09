@@ -2,9 +2,10 @@
    8) З бібліотеки flask імпортуємо функцію render_template, яка приймає ім’я шаблону
    і список змінних аргументів шаблону, а повертає готовий шаблон з заміненими аргументами
 '''
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, flash
 
 app = Flask(__name__) # 2) У випадку імпорту __name__ - буде ім’ям поточного файлу
+app.config['SECRET_KEY'] = "kihihngfcj6751jg"
 
 menu = [{"name": "Встановлення", "url": "install-flask"},
         {"name": "Перша програма", "url": "first-app"},
@@ -29,6 +30,11 @@ def about():
 
 @app.route("/contact", methods=['POST', 'GET'])
 def contact():
+    if request.method == 'POST':
+        if len(request.form['username']) > 2:
+            flash("Повідомлення відправлено")
+        else:
+            flash("Виникла помилка відправлення")
     return render_template("contact.html", title="Зворотній зв’язок", menu=menu)
 
 
