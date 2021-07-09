@@ -38,6 +38,11 @@ def contact():
     return render_template("contact.html", title="Зворотній зв’язок", menu=menu)
 
 
+@app.errorhandler(404)
+def pageNotFound(error):
+    return render_template("page404.html", title="Сторінку не знайдено", menu=menu)  # 10) в функцію render_template крім назви шаблону передаємо параметр title
+
+
 '''3) У випадку самостійного запуску __name__ - буде мати значення __main__;
       if __name__ == '__main__' - є умовою, що локальний сервер запуститься тільки
       при безпосередньому запуску з Python,  а не при імпортуванні як модуль 
